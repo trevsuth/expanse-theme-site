@@ -5,8 +5,16 @@
   --sine-wave-speed: 0.1 /* Speed of sine wave movement*/
 }
 
-.container {
+.main-div {
   display: flex;
+  flex-direction: row;
+  background-color: black;
+  color: var(--primary-color);
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -15,9 +23,13 @@
   color: var(--primary-color)
 }
 
-.red-square {
+.page-container {
   width: 40vw;
-  height: 40vh;
+}
+
+.red-square {
+  width: 30vw;
+  height: 10vh;
   background-color: black;
   border: 2px solid var(--primary-color);
 }
@@ -25,4 +37,13 @@
 .sine-wave-text {
   color: var(--primary-color);
   text-align: left;
+}
+
+.sidebar {
+  width: 33vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 2px solid var(--primary-color);
 }

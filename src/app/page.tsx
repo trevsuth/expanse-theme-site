@@ -1,10 +1,16 @@
-import SineWaveComponent from '../../components/SineWaveComponent';
+import SidebarComponent from '../../components/SidebarComponent';
 
-export default function Home() {
+const Page = () => {
   return (
-    <div className="container">
-        <SineWaveComponent text="Home Page"/>
-        <SineWaveComponent text="Other Page"/>
+    <div className='main-div'>
+      <div className="page-container">
+        <SidebarComponent />
+      </div>
+      <div className="main-content">
+        <p>This is my Page</p>
+      </div>
     </div>
   );
-}
+};
+
+export default Page;
