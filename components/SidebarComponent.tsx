@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SineWaveComponent from './SineWaveComponent';
 
 const SidebarComponent = () => {
@@ -10,18 +10,28 @@ const SidebarComponent = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'a' || e.key === 'A') {
+        toggleSidebar();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [isOpen]); // Dependency array includes isOpen to ensure the latest state is used
+
   return (
-    <>
-      <button onClick={toggleSidebar} className="sidebar-toggle">
-        {isOpen ? 'Hide' : 'Show'} Sidebar
-      </button>
-      <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-        <SineWaveComponent text="Page 1" />
-        <SineWaveComponent text="Page 2" />
-        <SineWaveComponent text="Page 3" />
-        <SineWaveComponent text="Page 4" />
-      </div>
-    </>
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+      <SineWaveComponent text="Page 1" />
+      <SineWaveComponent text="Page 2" />
+      <SineWaveComponent text="Page 3" />
+      <SineWaveComponent text="Page 4" />
+    </div>
   );
 };
 
