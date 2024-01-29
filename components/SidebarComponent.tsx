@@ -11,7 +11,7 @@ const SidebarComponent = () => {
   };
 
   useEffect(() => {
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (e: { key: string; }) => {
       if (e.key === 'a' || e.key === 'A') {
         toggleSidebar();
       }
