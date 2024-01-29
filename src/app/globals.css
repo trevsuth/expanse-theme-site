@@ -46,4 +46,20 @@
   flex-direction: column;
   gap: 10px;
   border: 2px solid var(--primary-color);
+  position: fixed;
+  left: -33vw;
+  top: 0;
+  transition: left 0.5s;
+  background-color: black;
+  color: var(--primary-color);
+}
+
+.sidebar.open {
+  left: 0; /* Slide in */
+}
+
+.sidebar-toggle {
+  position: fixed;
+  left: 0;
+  top: 0;
 }
