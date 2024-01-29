@@ -3,8 +3,12 @@
 import { useEffect, useRef } from 'react';
 import { initializeSineWave } from '../utils/sineWave';
 
-const SineWaveComponent = () => {
-  const canvasRef = useRef(null);
+interface SineWaveComponentProps {
+  text: string;
+}
+
+const SineWaveComponent: React.FC<SineWaveComponentProps> = ({ text }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -13,8 +17,11 @@ const SineWaveComponent = () => {
   }, []);
 
   return (
-    <div className="red-square">
-      <canvas ref={canvasRef} id="sineWaveCanvas"></canvas>
+    <div>
+      <p className="sine-wave-text">{text}</p>
+      <div className="red-square">
+        <canvas ref={canvasRef} id="sineWaveCanvas"></canvas>
+      </div>
     </div>
   );
 };

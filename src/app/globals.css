@@ -21,3 +21,8 @@
   background-color: black;
   border: 2px solid var(--primary-color);
 }
+
+.sine-wave-text {
+  color: var(--primary-color);
+  text-align: left;
+}
