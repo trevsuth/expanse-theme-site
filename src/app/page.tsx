@@ -7,7 +7,7 @@ const Page = () => {
         <SidebarComponent />
       </div>
       <div className="main-content">
-        <p>This is my Page</p>
+        <p>Press A to show/hide sidebar</p>
       </div>
     </div>
   );
