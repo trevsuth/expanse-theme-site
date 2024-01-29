@@ -41,21 +41,22 @@
 
 .sidebar {
   width: 33vw;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   gap: 10px;
   border: 2px solid var(--primary-color);
   position: fixed;
   left: -33vw;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   transition: left 0.5s;
   background-color: black;
   color: var(--primary-color);
 }
 
 .sidebar.open {
-  left: 0; /* Slide in */
+  left: 0;
 }
 
 .sidebar-toggle {
