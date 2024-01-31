@@ -7,25 +7,14 @@
 
 .main-div {
   display: flex;
-  flex-direction: row;
-  background-color: black;
-  color: var(--primary-color);
-  z-index: 0;
-}
-
-.main-content {
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
   background-color: black;
-  color: var(--primary-color)
-}
-
-.page-container {
-  width: 40vw;
+  color: var(--primary-color);
+  position: fixed;
 }
 
 .red-square {
@@ -100,7 +89,7 @@
 }
 
 .keyboard.visible {
-  bottom: 0; /* Slide in */
+  bottom: 0;
   opacity: 1;
   visibility: visible;
 }

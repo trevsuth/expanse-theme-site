@@ -1,15 +1,12 @@
-import SidebarComponent from '../../components/SidebarComponent';
-import OnScreenKeyboard from '../../components/OnScreenKeyboard';
+import SidebarComponent from './components/SidebarComponent';
+import OnScreenKeyboard from './components/OnScreenKeyboard';
 
 const Page = () => {
   return (
     <div className='main-div'>
-      <div className="page-container">
-        <SidebarComponent />
-      </div>
-      <div className="main-content">
+      <SidebarComponent />
         <p>Press A to show/hide sidebar</p>
-      </div>
+        <p>Press V to show/hide keyboardsrc/app/page.tsx</p>
       <OnScreenKeyboard />
     </div>
   );

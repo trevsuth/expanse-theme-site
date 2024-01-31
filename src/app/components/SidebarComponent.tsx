@@ -19,11 +19,10 @@ const SidebarComponent = () => {
 
     window.addEventListener('keydown', handleKeyPress);
 
-    // Clean up the event listener
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [isOpen]); // Dependency array includes isOpen to ensure the latest state is used
+  }, [isOpen]);
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
@@ -31,6 +30,7 @@ const SidebarComponent = () => {
       <SineWaveComponent text="Page 2" />
       <SineWaveComponent text="Page 3" />
       <SineWaveComponent text="Page 4" />
+      <SineWaveComponent text="Page 5" />
     </div>
   );
 };
