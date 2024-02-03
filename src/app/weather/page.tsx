@@ -1,14 +1,13 @@
-import SidebarComponent from './../components/SidebarComponent';
-import OnScreenKeyboard from './../components/OnScreenKeyboard';
+// pages/page.tsx
 
-const Page = () => {
+import React from 'react';
+import GetWeather from '../components/GetWeather';
+
+const Page: React.FC = () => {
   return (
-    <div className='main-div'>
-      <SidebarComponent />
-        <p>This is the weather page</p>
-        <p>Press A to show/hide sidebar</p>
-        <p>Press V to show/hide keyboard</p>
-      <OnScreenKeyboard />
+    <div>
+      <h1>Weather Forecast</h1>
+      <GetWeather />
     </div>
   );
 };
