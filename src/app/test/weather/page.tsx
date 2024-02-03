@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import getForecast from '../../utils/getOffice';
+import getForecast from '../../utils/getStationInfo';
 
 const TestForecast: React.FC = () => {
   const [lat, setLat] = useState('');

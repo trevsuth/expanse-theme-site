@@ -1,10 +1,10 @@
 async function getHourlyForecast(forecastHourlyUrl) {
     try {
       const response = await fetch(forecastHourlyUrl);
-      const data = await response.json();
-      return data;
+      const forecastData = await response.json();
+      return forecastData;
     } catch (error) {
-      console.error('Error fetching hourly weather data:', error);
+      console.error('Error fetching hourly forecast data:', error);
       return null;
     }
   }
