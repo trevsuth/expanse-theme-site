@@ -6,6 +6,7 @@ async function getStationInfo(lat, lon) {
     const data = await response.json();
     return {
       forecastHourlyUrl: data.properties.forecastHourly,
+      forecastDailyUrl: data.properties.forecast,
     };
   } catch (error) {
     console.error('Error fetching station data:', error);
