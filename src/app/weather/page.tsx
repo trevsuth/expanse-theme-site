@@ -5,7 +5,7 @@ import GetWeather from '../components/GetWeather';
 
 const Page: React.FC = () => {
   return (
-    <div>
+    <div className='main-div'>
       <h1>Weather Forecast</h1>
       <GetWeather />
     </div>
