@@ -1,55 +1,43 @@
-import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import React, { useEffect, useState } from 'react';
+import getHourlyForecast from '../utils/getHourlyForecast';
+import { Chart as ChartJS, ChartOptions, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-interface HourlyForecast {
-  properties: {
-    periods: Array<{
-      number: number;
-      startTime: string;
-      temperature: number;
-      temperatureUnit: string;
-      probabilityOfPrecipitation: { unitCode: string; value: number };
-      shortForecast: string;
-    }>;
-  };
-}
+const VisualizeHourlyForecast: React.FC<{ forecastUrl: string }> = ({ forecastUrl }) => {
+  const [forecastData, setForecastData] = useState<any>(null);
 
-const VisualizeHourlyForecast: React.FC<{ forecast: HourlyForecast }> = ({ forecast }) => {
-  const labels = forecast.properties.periods.slice(0, 36).map(period => new Date(period.startTime).toLocaleTimeString());
+  useEffect(() => {
+    const fetchForecast = async () => {
+      if (!forecastUrl) return;
+      const data = await getHourlyForecast(forecastUrl);
+      setForecastData(data);
+    };
+
+    fetchForecast();
+  }, [forecastUrl]);
+
+  if (!forecastData) {
+    return <div>Loading hourly forecast...</div>;
+  }
+
+  // Assuming forecastData follows the structure you provided earlier
+  const labels = forecastData.properties.periods.slice(0, 36).map((period: { startTime: string | number | Date; }) => new Date(period.startTime).toLocaleTimeString());
 
   const data = {
     labels,
     datasets: [
       {
         label: 'Temperature (°F)',
-        data: forecast.properties.periods.slice(0, 36).map(period => period.temperature),
+        data: forecastData.properties.periods.slice(0, 36).map((period: { temperature: any; }) => period.temperature),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         yAxisID: 'y',
       },
       {
         label: 'Precipitation Probability (%)',
-        data: forecast.properties.periods.slice(0, 36).map(period => period.probabilityOfPrecipitation.value),
+        data: forecastData.properties.periods.slice(0, 36).map((period: { probabilityOfPrecipitation: { value: any; }; }) => period.probabilityOfPrecipitation.value),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
         yAxisID: 'y1',
@@ -57,7 +45,7 @@ const VisualizeHourlyForecast: React.FC<{ forecast: HourlyForecast }> = ({ forec
     ],
   };
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     scales: {
       y: {
         type: 'linear',
@@ -69,11 +57,12 @@ const VisualizeHourlyForecast: React.FC<{ forecast: HourlyForecast }> = ({ forec
         display: true,
         position: 'right',
         grid: {
-          drawOnChartArea: false, // only want the grid lines for one axis to show up
+          drawOnChartArea: false,
         },
       },
     },
   };
+  
 
   return (
     <div>

@@ -1,24 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import getDailyForecast from '../utils/getDailyForecast';
 
 interface DailyForecast {
   properties: {
     periods: Array<{
       number: number;
       name: string;
-      startTime: string; // Start time of the day
-      endTime: string; // End time of the day
+      startTime: string;
+      endTime: string;
       temperature: number;
       temperatureUnit: string;
       shortForecast: string;
-      detailedForecast: string; // Assume this includes more detailed info
+      detailedForecast: string;
     }>;
   };
 }
 
-const VisualizeDailyForecast: React.FC<{ forecast: DailyForecast }> = ({ forecast }) => {
+// Update props to accept a URL instead of the entire forecast object
+const VisualizeDailyForecast: React.FC<{ forecastUrl: string }> = ({ forecastUrl }) => {
+  const [dailyForecast, setDailyForecast] = useState<DailyForecast | null>(null);
+
+  useEffect(() => {
+    const fetchForecast = async () => {
+      const forecastData = await getDailyForecast(forecastUrl);
+      setDailyForecast(forecastData);
+    };
+
+    fetchForecast();
+  }, [forecastUrl]); // Depend on forecastUrl to refetch if it changes
+
+  if (!dailyForecast) {
+    return <p>Loading daily forecast...</p>;
+  }
+
   return (
     <div style={{ display: 'flex', overflowX: 'auto', gap: '20px', padding: '20px' }}>
-      {forecast?.properties?.periods.map((period) => (
+      {dailyForecast.properties.periods.map((period) => (
         <div key={period.number} style={{ flex: '0 0 auto', border: '1px solid #ccc', padding: '10px', borderRadius: '8px', minWidth: '200px' }}>
           <h3>{period.name}</h3>
           <p><strong>Temperature:</strong> {period.temperature} {period.temperatureUnit}</p>

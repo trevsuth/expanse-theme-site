@@ -4,29 +4,24 @@
 import React, { useState } from 'react';
 import getCoordFromZip from '../utils/getCoordFromZip';
 import getStationInfo from '../utils/getStationInfo';
-import getHourlyForecast from '../utils/getHourlyForecast';
-import getDailyForecast from '../utils/getDailyForecast'; // Ensure this utility is correctly implemented
 import VisualizeHourlyForecast from './VisualizeHourlyForecast';
 import VisualizeDailyForecast from './VisualizeDailyForecast';
+import ZipCodeInput from './ZipCodeInput';
 
 const GetWeather: React.FC = () => {
-  const [zipCode, setZipCode] = useState('');
-  const [forecastData, setForecastData] = useState<any>(null); // Consider specifying a more accurate type
-  const [dailyForecast, setDailyForecast] = useState<any>(null); // Adjust for consistency and clarity
+  const [hourlyForecastUrl, setHourlyForecastUrl] = useState<string | null>(null);
+  const [dailyForecastUrl, setDailyForecastUrl] = useState<string | null>(null);
   const [error, setError] = useState('');
 
-  const handleGetWeather = async () => {
+  const handleZipSubmit = async (zipCode: string) => {
     setError('');
     const coords = await getCoordFromZip(zipCode);
     if (coords) {
       const { lat, lon } = coords;
       const stationInfo = await getStationInfo(lat, lon);
-      if (stationInfo && stationInfo.forecastHourlyUrl && stationInfo.forecastDailyUrl) {
-        const hourlyForecastData = await getHourlyForecast(stationInfo.forecastHourlyUrl);
-        setForecastData(hourlyForecastData);
-
-        const dailyForecastData = await getDailyForecast(stationInfo.forecastDailyUrl); 
-        setDailyForecast(dailyForecastData);
+      if (stationInfo) {
+        setHourlyForecastUrl(stationInfo.forecastHourlyUrl);
+        setDailyForecastUrl(stationInfo.forecastDailyUrl);
       } else {
         setError('Unable to get station info for the provided coordinates.');
       }
@@ -37,16 +32,10 @@ const GetWeather: React.FC = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={zipCode}
-        onChange={(e) => setZipCode(e.target.value)}
-        placeholder="Enter ZIP code"
-      />
-      <button onClick={handleGetWeather}>Get Weather</button>
+      <ZipCodeInput onZipSubmit={handleZipSubmit} />
       {error && <p>{error}</p>}
-      {forecastData && <VisualizeHourlyForecast forecast={forecastData} />}
-      {dailyForecast && <VisualizeDailyForecast forecast={dailyForecast} />}
+      {hourlyForecastUrl && <VisualizeHourlyForecast forecastUrl={hourlyForecastUrl} />}
+      {dailyForecastUrl && <VisualizeDailyForecast forecastUrl={dailyForecastUrl} />}
     </div>
   );
 };
