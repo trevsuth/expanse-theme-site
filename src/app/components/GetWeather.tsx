@@ -21,13 +21,12 @@ const GetWeather: React.FC = () => {
     if (coords) {
       const { lat, lon } = coords;
       const stationInfo = await getStationInfo(lat, lon);
-      if (stationInfo && stationInfo.forecastHourlyUrl && stationInfo.forecastDailyUrl) { // Assume stationInfo includes forecastDailyUrl
+      if (stationInfo && stationInfo.forecastHourlyUrl && stationInfo.forecastDailyUrl) {
         const hourlyForecastData = await getHourlyForecast(stationInfo.forecastHourlyUrl);
         setForecastData(hourlyForecastData);
 
-        // Assuming getDailyForecast is correctly implemented and stationInfo.forecastDailyUrl exists
         const dailyForecastData = await getDailyForecast(stationInfo.forecastDailyUrl); 
-        setDailyForecast(dailyForecastData); // Correctly use setDailyForecast for daily data
+        setDailyForecast(dailyForecastData);
       } else {
         setError('Unable to get station info for the provided coordinates.');
       }
