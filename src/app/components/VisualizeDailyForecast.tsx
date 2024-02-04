@@ -5,36 +5,27 @@ interface DailyForecast {
     periods: Array<{
       number: number;
       name: string;
-      startTime: string;
-      endTime: string;
-      isDaytime: boolean;
+      startTime: string; // Start time of the day
+      endTime: string; // End time of the day
       temperature: number;
       temperatureUnit: string;
-      windSpeed: string;
-      windDirection: string;
-      icon: string;
       shortForecast: string;
-      detailedForecast: string;
+      detailedForecast: string; // Assume this includes more detailed info
     }>;
   };
 }
 
 const VisualizeDailyForecast: React.FC<{ forecast: DailyForecast }> = ({ forecast }) => {
   return (
-    <div>
-      <h2>Daily Forecast</h2>
-      <ul>
-        {forecast?.properties?.periods?.map((period) => (
-          <li key={period.number}>
-            <div>Name: {period.name}</div>
-            <div>Temperature: {period.temperature} {period.temperatureUnit}</div>
-            <div>Wind: {period.windSpeed} {period.windDirection}</div>
-            <div>{period.shortForecast}</div>
-            {period.icon && <img src={period.icon} alt="Weather icon" />}
-            <p>{period.detailedForecast}</p>
-          </li>
-        ))}
-      </ul>
+    <div style={{ display: 'flex', overflowX: 'auto', gap: '20px', padding: '20px' }}>
+      {forecast?.properties?.periods.map((period) => (
+        <div key={period.number} style={{ flex: '0 0 auto', border: '1px solid #ccc', padding: '10px', borderRadius: '8px', minWidth: '200px' }}>
+          <h3>{period.name}</h3>
+          <p><strong>Temperature:</strong> {period.temperature} {period.temperatureUnit}</p>
+          <p><strong>Forecast:</strong> {period.shortForecast}</p>
+          <p>{period.detailedForecast}</p>
+        </div>
+      ))}
     </div>
   );
 };
