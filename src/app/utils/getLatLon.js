@@ -1,6 +1,6 @@
 // utils/getLatLon.js
 import getCurrentLocation from './getCurrentLocation';
-import getStationInfo from './GetStationInfo';
+import getStationInfo from './getStationInfo';
 
 const getLatLon = async () => {
   try {
